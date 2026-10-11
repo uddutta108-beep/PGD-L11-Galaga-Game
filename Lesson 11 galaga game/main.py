@@ -26,7 +26,7 @@ for x in range(8):
         enemies.append (Actor("bug"))
 
         enemies[-1].x = 100 + 50 * x
-        enemies[-1].y = 80 +50 * y
+        enemies[-1].y = 80 + 50 * y
 
 def on_key_down(key):
     if ship.dead == False:
@@ -40,7 +40,7 @@ def draw():
     screen.clear()
     screen.fill("blue")
 
-    screen.draw.text("Score:" +str(score), (50, 30))
+    screen.draw.text("Score:" + str(score), (50, 30))
 
     if ship.dead == False:
         ship.draw()
