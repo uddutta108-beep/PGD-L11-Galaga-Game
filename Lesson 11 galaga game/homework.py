@@ -51,8 +51,68 @@ def draw():
     for bullet in bullets:
         bullet.draw()
 
-def update():
-    pass
 
+    if len(enemies) == 0:
+        game_over()
+
+def game_over():
+    screen.draw.text("GAME OVER", (550, 300))
+
+def update():
+    global score, direction
+
+    move_down = False
+
+    if gun.dead == False:
+        if keyboard.left:
+            gun.x -= speed
+            if gun.x >=WIDTH:
+                gun.x = WIDTH
+
+        elif keyboard.right:
+            gun.x += speed
+            if gun.x >= WIDTH:
+                gun.x = WIDTH
+
+    for bullet in bullets:
+        if bullet.y <= 0:
+            bullets.remove (bullet)
+
+        else:
+            bullet.y -= 10
+
+    if len(enemies) > 0 and (enemies[-1].x > WIDTH-80 or enemies[0].x <80):
+
+        move_down = True
+        direction = direction * -1
+
+    for enemy in enemies:
+        enemy.x += 5*direction
+
+        if move_down == True:
+            enemy.y += 100
+
+        if enemy.y > HEIGHT:
+            enemies.remove (enemy)
+
+        for bullet in bullets:
+            if enemy.colliderect(bullet):
+                score = score + 100
+
+                bullets.remove(bullet)
+                enemies.remove(enemy)
+
+                if len(enemies) == 0:
+                    game_over()
+
+        if enemy.colliderect(gun):
+            gun.dead = True
+
+    if gun.dead:
+        gun.countdown -= 1
+
+    if gun.countdown == 0:
+        gun.dead = False
+        gun.countdown = 90
 
 pgzrun.go()

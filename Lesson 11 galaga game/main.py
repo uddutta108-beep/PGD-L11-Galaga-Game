@@ -96,7 +96,7 @@ def update():
 
         for bullet in bullets:
             if enemy.colliderect(bullet):
-                score  = score + 100
+                score = score + 100
 
                 bullets.remove(bullet)
                 enemies.remove(enemy)
